@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'IRANSans';
+    src: url('../fonts/IRANSans.ttf') format('truetype');
+}
+
+body{
+    background-color: black;
+}
+
+body,
+input,
+button
+section .main {
+  font-family: 'IRANSans';
+  font-size: var(--normal-font-size);
+  color: rgb(29, 29, 29);
+}
+
+body,
+input,
+button,
+section.main,
+.nav-item {
+    font-family: 'IRANSans', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    margin-left: 1rem; 
+    margin-right: 1rem; 
+}

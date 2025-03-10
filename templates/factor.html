@@ -1,0 +1,336 @@
+
+<!doctype html>
+<html dir="rtl" lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/assets/css/payment.css">
+    <link  href=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js ">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" integrity="sha384-dpuaG1suU0eT09tx5plTaGMLBsfDLzUCCUXOY2j/LSvXYuG6Bqs43ALlhIqAJVRb" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="https://v2.fontiran.com/css/IRANSans.css" rel="stylesheet">
+    <script src="../static/assets/js/payment.js"></script>
+  </head>
+  <style>
+    @font-face {
+        font-family: 'IRANSans';
+        src: url('../static/assets/fonts/IRANSans.ttf') format('truetype');
+    }
+
+    body,
+    input,
+    button
+    section .main {
+    font-family: 'IRANSans';
+    font-size: var(--normal-font-size);
+    color: rgb(29, 29, 29);
+    }
+
+    *{
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-item {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+  </style>
+
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary rounded-1">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img src="../static/assets/img/download.png" alt="Bootstrap" width="75" height="35" ></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse routes pt-2" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-between w-100">
+                    <li class="nav-item mx-4">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">پلاک خوان</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">فاکتور ها</li>
+                        </ol>
+                    </li>
+                    <li class="nav-item mx-4">
+                        <h5 class="nav-link" href="#">نرم افزار مدیریت</h5>
+                    </li>
+                    <li class="nav-item mx-4">
+                      <h5 class="nav-link">
+                          <span id="server-date-time">ساعت و تاریخ : در حال بارگذاری...</span>
+                      </h5>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <section class="payment-main">
+        <!-- hamburger menu -->
+        <nav class="navbar ">
+            <div class="container-fluid">
+              <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="row pt-4 mb-3" style=" border-radius: 20px; justify-content: center;">
+                
+              <div class="offcanvas offcanvas-start text-bg" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+
+                <div class="offcanvas-header text-center pt-5 mx-4">
+                  <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel text-center">پلاک خوان ها</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body pt-2 mx-2 ">
+                  <ul class="navbar-nav justify-content-start flex-grow-2 pe-4">
+                    <form class="d-flex mt-3" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                      </form>
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="/">پلاک خوان</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="/traffic">کنترل ترافیک</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle active" href="/situation" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        وضعیت ها
+                      </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" >
+                        <li><a class="dropdown-item" href="/situation">مجاز ها</a></li>
+                        <li><a class="dropdown-item" href="#">غیر مجاز ها</a></li>
+                        <li>
+                          <hr class="dropdown-divider">
+                        </li>
+                      </ul>
+                      <li class="nav-item">
+                        <a class="nav-link active" href="/requests">ثبت درخواست</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" href="#">تنظیمات بانک</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" href="/camera_settings">تنظیمات دوربین</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" href="#">تنظیمات راهبند</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" href="/setting">تنظیمات </a>
+                      </li>
+                    </li>
+                  </ul>
+
+                </div>
+              </div>
+            </div>
+        </nav>
+        <div class="container py-5">
+            <div class="row m-0">
+                <div class="col-lg-7 pb-5 pe-lg-5">
+                    <div class="row bg-light p-4 rounded-3">
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label">بازه زمانی</label>
+                            <select class="form-select" id="timeRange">
+                                <option value="daily">روزانه</option>
+                                <option value="weekly">هفتگی</option>
+                                <option value="monthly">ماهانه</option>
+                                <option value="yearly">سالانه</option>
+                            </select>
+                        </div>
+        
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label">نوع خدمات</label>
+                            <select class="form-select" id="serviceType">
+                                <option value="1">ثبت بار بر</option>
+                                <option value="2"> ثبت پلاک سواری</option>
+                                <option value="3">تعیین سرعت</option>
+                                <option value="4">کنترل ترافیک</option>
+                            </select>
+                        </div>
+        
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label"> رسید تراکنش ها </label>
+                            <div id="receipts" class="mt-2">
+                                <button class="btn btn-sm btn-success download-btn">
+                                    دانلود رسید <i class="fas fa-download ms-2"></i>
+                                </button>
+                            </div>
+                        </div>
+        
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label">تعداد کل عبورها در این بازه</label>
+                            <input type="number" id="passCount" 
+                                   class="form-control" 
+                                   value="100" 
+                                   readonly>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="col-lg-5 ps-lg-4">
+                    <div class="bg-light p-4 rounded-3">
+                        <h4 class="mb-4">فاکتور شرکت LG</h4>
+                        
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>درآمد کلی از سرویس:</span>
+                            <span id="totalIncome" class="price-number">0 ریال</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>هزینه خدمات کسر شده (10%): </span>
+                            <span id="serviceCost" class="price-number">0 ریال</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>بستانکار:</span>
+                            <span id="credit" class="price-number">0 ریال</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>بدهکار:</span>
+                            <span id="debit" class="price-number">0 ریال</span>
+                        </div>
+                        <hr>
+                        
+                        <div class="d-flex justify-content-between mb-3 total-price">
+                            <span>درآمد خالص حاصل از سرویس:</span>
+                            <span id="netIncome" class="price-number">0 ریال</span>
+                        </div>
+        
+                        <button class="btn btn-primary w-100 mt-4">
+                            پرداخت مابه تفاوت
+                            <i class="fas fa-arrow-left ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+  </body>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const config = {
+            passes: {
+                daily: 10,
+                weekly: 100,
+                monthly: 1000,
+                yearly: 10000
+            },
+            rates: {
+                '1': 50000,   // ثبت باربر
+                '2': 30000,   // پلاک سواری
+                '3': 75000,   // تعیین سرعت
+                '4': 100000   // کنترل ترافیک
+            },
+            serviceFee: 0.1 // 10%
+        };
+    
+        const elements = {
+            timeRange: document.getElementById('timeRange'),
+            serviceType: document.getElementById('serviceType'),
+            passCount: document.getElementById('passCount'),
+            totalIncome: document.getElementById('totalIncome'),
+            serviceCost: document.getElementById('serviceCost'),
+            credit: document.getElementById('credit'),
+            debit: document.getElementById('debit'),
+            netIncome: document.getElementById('netIncome')
+        };
+    
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('fa-IR', {
+                style: 'currency',
+                currency: 'IRR'
+            }).format(amount).replace('ریال', '') + 'ریال';
+        }
+    
+        function calculateValues() {
+            const timeRange = elements.timeRange.value;
+            const serviceType = elements.serviceType.value;
+            
+            // تعداد عبور
+            const passes = config.passes[timeRange];
+            elements.passCount.value = passes;
+    
+            // محاسبات مالی
+            const rate = config.rates[serviceType];
+            const totalIncome = passes * rate;
+            const serviceCost = totalIncome * config.serviceFee;
+            const netIncome = totalIncome - serviceCost;
+    
+            // نمایش مقادیر
+            elements.totalIncome.textContent = formatCurrency(totalIncome);
+            elements.serviceCost.textContent = formatCurrency(serviceCost);
+            elements.netIncome.textContent = formatCurrency(netIncome);
+            
+            // مقادیر نمونه برای بستانکار/بدهکار
+            elements.credit.textContent = formatCurrency(netIncome * 0.3);
+            elements.debit.textContent = formatCurrency(netIncome * 0.2);
+        }
+    
+        // Event Listeners
+        elements.timeRange.addEventListener('change', calculateValues);
+        elements.serviceType.addEventListener('change', calculateValues);
+    
+        // محاسبه اولیه
+        calculateValues();
+    
+        // دانلود رسید
+        document.querySelector('.download-btn').addEventListener('click', function() {
+            const data = {
+                timeRange: elements.timeRange.options[elements.timeRange.selectedIndex].text,
+                serviceType: elements.serviceType.options[elements.serviceType.selectedIndex].text,
+                totalIncome: elements.totalIncome.textContent,
+                netIncome: elements.netIncome.textContent,
+                date: new Date().toLocaleDateString('fa-IR')
+            };
+    
+            const content = `
+                رسید پرداخت
+                تاریخ: ${data.date}
+                ----------------------
+                بازه زمانی: ${data.timeRange}
+                نوع خدمات: ${data.serviceType}
+                درآمد کل: ${data.totalIncome}
+                درآمد خالص: ${data.netIncome}
+            `;
+    
+            const blob = new Blob([content], {type: 'text/plain'});
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `receipt-${Date.now()}.txt`;
+            a.click();
+        });
+    });
+    
+    </script>
+    
+    <style>
+    .price-number {
+        direction: ltr;
+        display: inline-block;
+        font-family: 'Courier New', monospace;
+    }
+    
+    .total-price {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+    
+    .download-btn {
+        width: 100%;
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+    
+    .form-select {
+        cursor: pointer;
+    }
+    </style>
+</html>

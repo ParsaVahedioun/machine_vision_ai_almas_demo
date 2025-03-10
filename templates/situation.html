@@ -1,0 +1,561 @@
+<!doctype html>
+<html dir="rtl" lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" integrity="sha384-dpuaG1suU0eT09tx5plTaGMLBsfDLzUCCUXOY2j/LSvXYuG6Bqs43ALlhIqAJVRb" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/persian-date@1.2.0/dist/persian-date.min.js"></script>      
+  </head>
+  <style>
+    @font-face {
+        font-family: 'IRANSans';
+        src: url('../static/assets/fonts/IRANSans.ttf') format('truetype');
+    }
+
+    .plate-item {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.plate-item:hover {
+    transform: translateY(-2px);
+}
+
+.status-select {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+}
+
+  .card {
+    border-radius: 15px !important;
+    width: 600px;
+    height: 100px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+    #allowed-plates-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    }
+    .edit-btn {
+    transition: all 0.2s ease;
+}
+
+.edit-btn:hover {
+    transform: scale(1.05);
+    background-color: #0d6efd !important;
+}
+
+.delete-btn {
+    transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+    transform: scale(1.05);
+    background-color: #d61b2e !important;
+}
+
+#dateRangeField input[type="date"] {
+    direction: ltr;
+    text-align: right;
+}
+
+#dateRangeField .fa-arrow-left {
+    font-size: 0.8rem;
+    margin: 0 5px;
+}
+
+/* برای مرورگرهای وبکیت */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+    body,
+    input,
+    button
+    section .main {
+    font-family: 'IRANSans';
+    font-size: var(--normal-font-size);
+    color: rgb(29, 29, 29);
+    }
+
+    body,
+    input,
+    button,
+    section.main,
+    .nav-item {
+        font-family: 'IRANSans', sans-serif;
+    }
+
+    *{
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-item {
+        margin-left: 1rem; 
+        margin-right: 1rem; 
+    }
+  </style>
+  <body class="">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary rounded-1">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="/"><img src="../static/assets/img/download.png" alt="Bootstrap" width="75" height="35" ></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse routes pt-2" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-between w-100">
+                  <li class="nav-item mx-4">
+                    <h5 class="nav-link" id="live-date">
+                      امروز: {{ persian_date }}
+                    </h5>
+                  </li>
+                  <li class="nav-item mx-4">
+                      <h5 class="nav-link" href="#">نرم افزار مدیریت</h5>
+                  </li>
+                  <li class="nav-item mx-4">
+                    <h5 class="nav-link">
+                        <span id="server-date-time">ساعت و تاریخ : در حال بارگذاری...</span>
+                    </h5>
+                  </li>
+              </ul>
+
+          </div>
+      </div>
+    </nav>
+    <section class="situation-main">
+        <!-- hamburger menu -->
+        <nav class="navbar ">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="row pt-4 mb-3" style=" border-radius: 20px; justify-content: center;">
+              <div class=" ">
+                <form class="d-flex" role="search">
+                  <input class="form-control me-2 col-md-2" type="search" placeholder="Search" aria-label="Search" style="width: 400px;">
+                  <button class="btn btn-outline-success " type="submit">جستجو</button>
+                </form>
+              </div>
+            <div class="offcanvas offcanvas-start text-bg" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+
+              <div class="offcanvas-header text-center pt-5 mx-4">
+                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel text-center">پلاک خوان ها</h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body pt-2 mx-2 ">
+                <ul class="navbar-nav justify-content-start flex-grow-2 pe-4">
+                  <form class="d-flex mt-3" role="search">
+                      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                      <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">پلاک خوان</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/traffic">کنترل ترافیک</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="/situation" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      وضعیت ها
+                    </a>
+                      <ul class="dropdown-menu dropdown-menu-dark" >
+                      <li><a class="dropdown-item" href="/situation">مجاز ها</a></li>
+                      <li><a class="dropdown-item" href="#">غیر مجاز ها</a></li>
+                      <li>
+                        <hr class="dropdown-divider">
+                      </li>
+                    </ul>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="/requests">ثبت درخواست</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">تنظیمات بانک</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="/camera_settings">تنظیمات دوربین</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">تنظیمات راهبند</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="/setting">تنظیمات </a>
+                    </li>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+          </div>
+        </nav>
+        <section class="row col-md-12 text-center" style="justify-content: center;">        
+          <form class="row g-3 needs-validation col-7" novalidate id="driver-form">
+              <div class=" pt-3 container-md" style="justify-content: center; border-radius: 50px; " >
+                <div data-bs-spy="scroll" 
+                 data-bs-target="#list-example" 
+                 data-bs-offset="0" 
+                 data-bs-smooth-scroll="true" 
+                 class="scrollspy-example bg-body-tertiary p-3 rounded-2 overflow-auto" 
+                 tabindex="0" 
+                 style="height: 500px;">
+                
+                <!-- محتوا هر راننده -->
+                <div id="list-item-1" class="mb-3  col-md-12" style="justify-content: center;">
+                    
+                    <div style="justify-content: center;  " class="row g-3 ">
+                        <h5 class="text-center mb-4">مشخصات راننده</h5>
+                          <div class="row" style="justify-content: center;">
+                            <div class="col-md-4 text-center mb-4" style="justify-content: center; " >
+                              <label for="validationCustom01" class="form-label">نام و نام خانوادگی </label>
+                              <input type="text" class="form-control" id="validationCustom01"  required>
+                              <div class="invalid-feedback">
+                                نام و نام خانوادگی معتبر نیست  
+                              </div>
+                            </div>
+                            <div class="col-md-4 text-center mb-4">
+                              <label for="validationCustom02" class="form-label">شماره تماس</label>
+                              <input type="text" class="form-control" id="validationCustom02" 
+                                     pattern="09\d{9}" 
+                                     placeholder="*********09" required>
+                              <div class="invalid-feedback">
+                                  شماره تماس را به صورت صحیح وارد کنید (مثال: 09123456789)
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div class="col-md-4 text-center mb-4">
+                            <label class="form-label">شماره پلاک</label>
+                            <div class="d-flex justify-content-center gap-2">
+                                <input type="text" class="form-control text-center" id="plate-part1" maxlength="2" value="21" required style="width: 50px;">
+                                
+                                <input type="text" class="form-control text-center" id="plate-part3" maxlength="3" value="345" required style="width: 70px;">
+                                <select class="form-select" id="plate-part2" style="width: 70px;" required>
+                                  <option value="">انتخاب حرف</option>
+                                  <option value="الف">الف</option>
+                                  <option value="ب">ب</option>
+                                  <option value="ج">ج</option>
+                                  <option value="د">د</option>
+                                  <option value="ر">ر</option>
+                                  <option value="س">س</option>
+                                  <option value="ص">ص</option>
+                                  <option value="ط">ط</option>
+                                  <option value="ق">ق</option>
+                                  <option value="ل">ل</option>
+                                  <option value="م">م</option>
+                                  <option value="ن">ن</option>
+                                  <option value="و">و</option>
+                                  <option value="ه">ه</option>
+                                  <option value="ی">ی</option>
+                                  <option value="ت">ت</option>
+                                  <option value="ک">ک</option>
+                                  <option value="معلول"><i class="fa-solid fa-wheelchair"></i>
+                                  </option>
+                                  <option value="ز">ز</option>
+                                  <option value="ش">ش</option>
+                                  <option value="ف">ف</option>
+                                  <option value="پ">پ</option>
+                                  <option value="ث">ث</option>
+                                  <option value="تشریفاتی">تشریفاتی</option>
+                                  <option value="S">S</option>
+                                  <option value="D">D</option>
+
+                                </select>
+                                <input type="text" class="form-control text-center" id="plate-part4" maxlength="2" value="13" required style="width: 50px;">
+                            </div>
+                            <div class="invalid-feedback">
+                                شماره پلاک را کامل وارد کنید.
+                            </div>
+                          </div>
+                        
+                          <div class="col-md-4 text-center mb-4">
+                            <label for="validationCustom04" class="form-label">وضعیت</label>
+                            <select class="form-select" id="validationCustom04" required>
+                              <option>غیر مجاز</option>
+                              <option> مجاز</option>
+                            </select>
+                            <div class="invalid-feedback">
+                              لطفا یکی از موارد را انتخاب کنید
+                            </div>
+                          </div>
+                          <!-- جایگزینی فیلد تاریخ انقضا با این کد -->
+                          <div class="col-md-4 text-center mb-4" id="dateRangeField" style="display: none;">
+                            <div class="row g-2">
+                                <div class="col-12">
+                                    <label for="startDate" class="form-label">تاریخ شروع (شمسی)</label>
+                                    <input type="text" class="form-control persian-date-input" 
+                                           id="startDate" 
+                                           placeholder="1403/05/15" 
+                                           pattern="\d{4}/\d{2}/\d{2}">
+                                </div>
+                                <div class="col-12">
+                                    <label for="endDate" class="form-label">تاریخ پایان (شمسی)</label>
+                                    <input type="text" class="form-control persian-date-input" 
+                                           id="endDate" 
+                                           placeholder="1403/05/20" 
+                                           pattern="\d{4}/\d{2}/\d{2}">
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="gap-3 col-6 mx-auto">
+                      <button type="submit" class="btn btn-primary">
+                        ثبت اطلاعات
+                      </button>
+                      <button type="button" class="btn btn-outline-secondary">
+                        اضافه کردن راننده +
+                      </button>
+                    </div>
+                </div>
+    
+                
+            </div>
+              </div>
+          </form>
+          <form class="col-5 text-center" style="justify-content: center;">
+            <div class=" pt-3 container-md" style="justify-content: center; border-radius: 50px; " >
+              <p>پلاک های مجاز/غیر مجاز</p>
+              <div id="allowed-plates-list" class="mb-3 pt-2 col-2 row g-2">
+              </div>
+            </div>
+            
+          </form>
+        </section>
+          
+
+        </div>
+
+    </section>
+
+  <script>
+
+    (() => {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+            
+      }
+
+      form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+
+    document.addEventListener('DOMContentLoaded', () => {
+        let drivers = JSON.parse(localStorage.getItem('drivers')) || [];
+        let currentEditingIndex = null;
+
+        const statusColors = {
+            'مجاز': 'bg-success',
+            'غیر مجاز': 'bg-danger'
+        };
+
+        // تابع ایجاد آیتم‌ها
+        function updatePlatesList() {
+            const platesList = document.getElementById('allowed-plates-list');
+            platesList.innerHTML = '';
+
+            drivers.forEach((driver, index) => {
+                const plateItem = document.createElement('div');
+                plateItem.className = 'col-12 mb-2 plate-item';
+                plateItem.innerHTML = `
+                    <div class="card p-2 ${statusColors[driver.status]} bg-opacity-25">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="text-start flex-grow-1">
+                                <small class="text-muted">${driver.plate}</small><br>
+                                <span class="fw-bold">${driver.name}</span>
+                                ${driver.startDate ? `
+                                <br>
+                                <small class="text-muted">
+                                  ${driver.startDate} 
+                                  <i class="fas fa-arrow-left"></i> 
+                                  ${driver.endDate}
+                                </small>
+                              ` : ''}
+                            </div>
+                            <div class="d-flex gap-2 align-items-center">
+                                <select class="form-select form-select-sm status-select" style="width: 100px">
+                                    <option ${driver.status === 'مجاز' ? 'selected' : ''}>مجاز</option>
+                                    <option ${driver.status === 'غیر مجاز' ? 'selected' : ''}>غیر مجاز</option>
+                                </select>
+                                <button class="btn btn-sm btn-warning edit-btn">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger delete-btn">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                
+
+
+                plateItem.querySelector('.status-select').addEventListener('change', (e) => {
+                    drivers[index].status = e.target.value;
+                    saveAndUpdate();
+                });
+
+                plateItem.querySelector('.delete-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if(confirm('آیا از حذف این راننده مطمئن هستید؟')) {
+                        drivers.splice(index, 1);
+                        saveAndUpdate();
+                    }
+                });
+
+                plateItem.querySelector('.edit-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    currentEditingIndex = index;
+                    fillFormForEditing(driver);
+                    document.querySelector('#driver-form button[type="submit"]').textContent = 'آپدیت اطلاعات';
+                });
+
+                platesList.appendChild(plateItem);
+            });
+        }
+
+        document.getElementById('validationCustom04').addEventListener('change', function() {
+          const dateRangeField = document.getElementById('dateRangeField');
+          if (this.value === 'مجاز') {
+            dateRangeField.style.display = 'block';
+            document.getElementById('startDate').setAttribute('required', 'required');
+            document.getElementById('endDate').setAttribute('required', 'required');
+          } else {
+            dateRangeField.style.display = 'none';
+            document.getElementById('startDate').removeAttribute('required');
+            document.getElementById('endDate').removeAttribute('required');
+          }
+        });
+        
+
+        function fillFormForEditing(driver) {
+          const plateParts = driver.plate.split(" ");
+          document.getElementById('validationCustom01').value = driver.name;
+          document.getElementById('validationCustom02').value = driver.phone;
+          document.getElementById('plate-part1').value = plateParts[0];
+          document.getElementById('plate-part2').value = plateParts[1];
+          document.getElementById('plate-part3').value = plateParts[2];
+          document.getElementById('plate-part4').value = plateParts[3];
+          document.getElementById('validationCustom04').value = driver.status;
+          if (driver.startDate && driver.endDate) {
+            document.getElementById('startDate').value = driver.startDate;
+            document.getElementById('endDate').value = driver.endDate;
+            document.getElementById('dateRangeField').style.display = 'block';
+          } else {
+            document.getElementById('dateRangeField').style.display = 'none';
+          }
+        }
+
+
+        function saveAndUpdate() {
+            localStorage.setItem('drivers', JSON.stringify(drivers));
+            updatePlatesList();
+        }
+
+        function resetForm() {
+            currentEditingIndex = null;
+            document.getElementById('driver-form').reset();
+            document.querySelector('#driver-form button[type="submit"]').textContent = 'ثبت اطلاعات';
+            document.getElementById('dateRangeField').style.display = 'none';
+            document.getElementById('startDate').removeAttribute('required');
+            document.getElementById('endDate').removeAttribute('required');
+        }
+
+        function persianToGregorian(pDate) {
+          try {
+            const [year, month, day] = pDate.split('/').map(Number);
+            const pd = new PersianDate(year, month-1, day);
+            return pd.toDate();
+          } catch {
+            return null;
+          }
+        }
+
+        function gregorianToPersian(date) {
+          const pd = new PersianDate(date);
+          return pd.format('YYYY/MM/DD');
+        }
+
+
+        // مدیریت فرم
+        document.getElementById('driver-form').addEventListener('submit', (e) => {
+          if (document.getElementById('validationCustom04').value === 'مجاز') {
+            const startDate = new Date(document.getElementById('startDate').value);
+            const endDate = new Date(document.getElementById('endDate').value);
+        
+            if (!document.getElementById('startDate').value || !document.getElementById('endDate').value) {
+              e.preventDefault();
+              e.stopPropagation();
+              alert('لطفا هر دو تاریخ را وارد کنید');
+              return;
+            }
+        
+          if (startDate > endDate) {
+            e.preventDefault();
+            e.stopPropagation();
+            alert('تاریخ شروع نمی‌تواند بعد از تاریخ پایان باشد!');
+            return;
+          }
+    }
+
+        const driverData = {
+          name: document.getElementById('validationCustom01').value,
+          phone: document.getElementById('validationCustom02').value,
+          plate: `${document.getElementById('plate-part1').value} ${document.getElementById('plate-part2').value} ${document.getElementById('plate-part3').value} ${document.getElementById('plate-part4').value}`,
+          status: document.getElementById('validationCustom04').value,
+          startDate: document.getElementById('startDate').value,
+          endDate: document.getElementById('endDate').value
+        };
+
+
+        if(currentEditingIndex !== null) {
+            drivers[currentEditingIndex] = driverData;
+        } else {
+            // بررسی تکراری نبودن پلاک
+            if(drivers.some(d => d.plate === driverData.plate)) {
+                alert('این پلاک قبلا ثبت شده است!');
+                return;
+            }
+            drivers.push(driverData);
+        }
+        
+        saveAndUpdate();
+        resetForm();
+        form.classList.remove('was-validated');
+    });
+
+        document.querySelector('.btn-outline-secondary').addEventListener('click', resetForm);
+
+        // اعتبارسنجی فرم
+        const form = document.getElementById('driver-form');
+        form.addEventListener('submit', (e) => {
+            if (!form.checkValidity()) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+
+        // بارگذاری اولیه
+        updatePlatesList();
+    });        
+  </script>
+    
+</html>

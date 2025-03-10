@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+.search-box {
+    position:absolute ;
+    top: 140px;
+    right: 10px;
+    z-index: 1000;
+    width: 300px;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+.camera-box {
+    position:absolute ;
+    top: 250px;
+    right: 10px;
+    z-index: 1000;
+    width: 300px;
+    background: white;
+    /* padding: 10px; */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+.search-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-bottom: 5px;
+}
+
+.btn {
+    width: 100%;
+    padding: 8px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+.camera-item:hover {
+  background: #f8f9fa;
+  transform: translateX(5px);
+  transition: all 0.3s;
+}
+
+.btn-danger {
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: 15px;
+}
+.camera-item {
+    position: relative;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.delete-btn {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+.camera-item:hover .delete-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* استایل پاپ‌آپ */
+.camera-popup {
+    width: 300px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.live-feed {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* استایل مودال بزرگنمایی */
+.video-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 9999;
+}
+
+.fullscreen-feed {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}

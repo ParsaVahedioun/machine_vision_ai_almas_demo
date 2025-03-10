@@ -1,0 +1,214 @@
+<!doctype html>
+<html dir="rtl" lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" integrity="sha384-dpuaG1suU0eT09tx5plTaGMLBsfDLzUCCUXOY2j/LSvXYuG6Bqs43ALlhIqAJVRb" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>      
+  </head>
+  <style>
+    @font-face {
+        font-family: 'IRANSans';
+        src: url('../assets/fonts/IRANSans.ttf') format('truetype');
+    }
+
+    body,
+    input,
+    button
+    section .main {
+    font-family: 'IRANSans';
+    font-size: var(--normal-font-size);
+    color: rgb(29, 29, 29);
+    }
+
+    .setting-cam{
+      justify-content: center;
+    }
+    
+    .cam-form{
+      justify-content: center;
+      border-radius: 20px;
+      background-color: rgba(173, 173, 173, 0.779);
+      margin-top: 10px;
+      width: 900px;
+      height: 350px;
+      margin-right: 320px;
+    }
+
+    body,
+    input,
+    button,
+    section.main,
+    .nav-item {
+        font-family: 'IRANSans', sans-serif;
+    }
+
+    *{
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-item {
+        margin-left: 1rem; 
+        margin-right: 1rem; 
+    }
+  </style>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary rounded-1">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img src="../static/assets/img/download.png" alt="Bootstrap" width="75" height="35"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse routes pt-2" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-between w-100">
+                    <li class="nav-item mx-4">
+                        <h5 class="nav-link" aria-current="page" href="#"><nav aria-label="breadcrumb">
+                          <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">پلاک خوان</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">تنظیمات دوربین</li>
+                          </ol>
+                        </nav></h5>
+                    </li>
+                    <li class="nav-item mx-4">
+                        <h5 class="nav-link" href="#">نرم افزار نترل ترافیک</h5>
+                    </li>
+                    <li class="nav-item mx-4">
+                        <h5 class="nav-link" href="#">ساعت و تاریخ : {date_time}</h5>
+                    </li>
+                </ul>
+                
+            </div>
+        </div>
+    </nav>
+    <section class="camera-setting">
+        <!-- hamburger menu -->
+        <nav class="navbar ">
+                <div class="container-fluid">
+                  <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="offcanvas offcanvas-start text-bg" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+
+                    <div class="offcanvas-header text-center pt-5 mx-4">
+                      <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel text-center">پلاک خوان ها</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body pt-2 mx-2 ">
+                      <ul class="navbar-nav justify-content-start flex-grow-2 pe-4">
+                        <form class="d-flex mt-3" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                          </form>
+                        <li class="nav-item">
+                          <a class="nav-link active" aria-current="page" href="/">پلاک خوان</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" href="#">کنترل ترافیک</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            وضعیت ها
+                          </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="#">مجاز ها</a></li>
+                            <li><a class="dropdown-item" href="#">غیر مجاز ها</a></li>
+                            <li>
+                              <hr class="dropdown-divider">
+                            </li>
+                          </ul>
+                          <li class="nav-item">
+                            <a class="nav-link active" href="/requests">ثبت درخواست</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link active" href="#">تنظیمات بانک</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link active" href="/camera_settings">تنظیمات دوربین</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link active" href="#">تنظیمات راهبند</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link active" href="#">ثبت تردد های مجاز</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link active" href="#">تنظیمات </a>
+                          </li>
+                        </li>
+                      </ul>
+
+                    </div>
+                  </div>
+                </div>
+        </nav>
+          <form class="row g-3 col-12 text-center cam-form needs-validation" style="justify-content: center" novalidate>
+            <div class=" row g-4 setting-cam" >
+              <div class="col-md-4 text-center" >
+                <label for="validationCustom01" class="form-label">ip دوربین</label>
+                <input type="text" class="form-control" id="validationCustom01" value="192.168.0.0" required>
+                <div class="valid-feedback">
+                  تایید
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label for="validationCustom02" class="form-label">پورت دوربین</label>
+                <input type="text" class="form-control" id="validationCustom02" value="554" required>
+                <div class="valid-feedback">
+                  تایید
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-4">
+              <label for="validationCustomUsername" class="form-label">نام کاربری دوربین</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                <input type="text" class="form-control" id="validationCustomUsername" placeholder="مثال : admin" aria-describedby="inputGroupPrepend" >
+                <div class="valid-feedback">
+                  تایید 
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="validationCustom03" class="form-label">رمز کاربری </label>
+              <input type="password" class="form-control" id="validationCustom03" required>
+              <div class="invalid-feedback">
+                لطفا رمز کاربری را وارد کنید 
+              </div>
+            </div>
+            
+             
+            <div class="col-8">
+              <button class="btn btn-primary" type="submit">ثبت دوربین </button>
+            </div>
+          </form>
+
+    </section>
+
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+    
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+   <html lang="fa" dir="rtl">
+   <head >
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <!--=============== REMIXICONS ===============-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css" crossorigin="">
+
+      <!--=============== CSS ===============-->
+      <link rel="stylesheet" href="../static/assets/css/login.css">
+
+      <title>صفحه لاگین پلاک خوان الماس شرق</title>
+   </head>
+   <body>
+      <div class="login">
+         <img src="../static/assets/img/AAgb.gif" class="login__bg">
+         <form action="/login" method="POST" class="login__form">
+            <h1 class="login__title">ورود به سیستم</h1>
+            <i class="ri-car-fill"></i>
+
+            <div class="login__inputs">
+            <div class="login__box">
+               <input type="text" id="username" name="username" placeholder="نام کاربری" required class="login__input">
+               <i class="ri-user-fill"></i>
+            </div>
+
+            <div class="login__box">
+               <input type="password" id="password" name="password" placeholder="رمز عبور" required class="login__input">
+               <i class="ri-lock-2-fill"></i>
+            </div>
+      </div>
+
+      <button type="submit" class="login__button">ورود</button>
+   </form>
+
+      </div>
+   </body>
+   <script>
+      document.getElementById('loginForm').addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+
+          const response = await fetch('/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username, password })
+          });
+
+          const data = await response.json();
+          if (response.ok) {
+              document.getElementById('message').textContent = 'ورود موفقیت‌آمیز بود(;';
+              // Store the token in localStorage
+              localStorage.setItem('token', data.token);
+              window.location.href = '/dashboard'; // Redirect to dashboard
+          } else {
+              document.getElementById('message').textContent =  'رمز عبور یا نام کاربری اشتباه است.';
+          }
+      });
+  </script>
+</html>  
