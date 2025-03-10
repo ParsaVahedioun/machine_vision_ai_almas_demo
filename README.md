@@ -2,3 +2,4 @@
 در پوشه "detect_file" خروجی مدل و همچنین سایت گذاشته شده است 
 در پوشه "template" به همراه "static" فایل فرانت سایت گذاشته شده 
 در فایل"main" برای سایت api نوشته شده
+![frame_72](https://github.com/user-attachments/assets/0a3fb1e7-2ebb-4248-8fc0-11347d2dbed8)
